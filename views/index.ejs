@@ -2,13 +2,21 @@
     <%- include('head', { title: title }) %>
     <body>
         <h1><%= title %></h1>
+        <nav>
+            <ul>
+                <li>
+                    <a href="/new">New Message</a>
+                </li>
+            </ul>
+        </nav>
         <ul>
             <% messages.forEach((message) => { %>
                 <li>
                     <div>
                         <p>"<%= message.text %>"</p>
                         <p>
-                            Posted by <%= message.user %> on <%= message.added %>
+                            Posted by <%= message.user %> on 
+                            <a href="/message?id=<%= message.id %>"><%= message.added %></a>
                         </p>
                     </div>
                 </li>
