@@ -11,5 +11,5 @@ app.listen(PORT, (error) => {
     if (error) {
         throw error;
     }
-    console.log(`Mini Message Board running! Go to http://localhost:${PORT}.`)
+    console.log(`Mini Message Board running at http://localhost:${PORT}.`)
 });
