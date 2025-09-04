@@ -15,7 +15,7 @@ const messages = [
 ];
 
 router.get("/", (req, res) => {
-    res.send("Hello, World!");
+    res.render("index", { title: "Mini Message Board", messages: messages });
 });
 
 module.exports = router;
