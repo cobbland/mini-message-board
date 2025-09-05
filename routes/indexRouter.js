@@ -41,7 +41,6 @@ router.post("/new", (req, res) => {
 router.get("/message", async (req, res) => {
     try {
         const message = await getMessage(req.query.id);
-        console.log(message);
         res.render("message", { title: "Message", message: message });
     } catch(err) {
         console.error(err);
