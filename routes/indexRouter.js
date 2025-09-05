@@ -2,27 +2,52 @@ const express = require("express");
 const router = express.Router();
 
 const path = require("node:path");
-const { messages, newDate } = require("../db.js");
+const newDate = require("../newDate.js");
+const { addToDB, getAllMessages, getNextId, getMessage } = require('../db.js');
 
-router.get("/", (req, res) => {
-    res.render("index", { title: "Mini Message Board", messages: messages });
+router.get("/", async (req, res) => {
+    try {
+        const messages = await getAllMessages();
+        res.render("index", { title: "Mini Message Board", messages: messages });
+    } catch (err) {
+        console.error(err);
+        res.render("index", { title: "Mini Message Board", messages: [] });
+    };
+    
 });
 
-router.get("/new", (req, res) => {
-    res.render("form", { title: "New Message", nextId: messages.length });
+router.get("/new", async (req, res) => {
+    try {
+        const nextId = await getNextId();
+        res.render("form", { title: "New Message", nextId: nextId });
+    } catch (err) {
+        console.error(err);
+        res.render("form", { title: "New Message", nextId: Math.random() * (10000 - 100) + 100 });
+    };
 });
 router.post("/new", (req, res) => {
-    messages.push({ 
+    const messageData = { 
         text: req.body.message,
         user: req.body.name,
         added: newDate(),
         id: req.body.id,
-    });
-    res.redirect("/");
+    };
+    addToDB(messageData);
+    setTimeout(() => {
+        res.redirect("/");
+    }, 200);
 });
 
-router.get("/message", (req, res) => {
-    res.render("message", { title: "Message", message: messages[req.query.id] });
+router.get("/message", async (req, res) => {
+    try {
+        const message = await getMessage(req.query.id);
+        console.log(message);
+        res.render("message", { title: "Message", message: message });
+    } catch(err) {
+        console.error(err);
+        res.render("message", { title: "Message", message: {} });
+    };
+    
 });
 
 module.exports = router;
