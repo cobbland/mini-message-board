@@ -1,19 +1,16 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
     <%- include('head', { title: title }) %>
     <body>
-        <h1><%= title %></h1>
-        <nav>
-            <ul>
-                <li>
-                    <a href="/">Back</a>
-                </li>
-            </ul>
-        </nav>
-        <div>
-            <p>"<%= message.text %>"</p>
-            <p>
-                Posted by <%= message.user %> on <%= message.added %>
-            </p>
+        <div class="content">
+            <h1><%= title %></h1>
+            <div class="message">
+                <p>"<%= message.text %>"</p>
+                <p>
+                    Posted by <%= message.user %> on <%= message.added %>
+                </p>
+            </div>
+            <a href="/"><button>Back</button></a>
         </div>
         <%- include('footer') %>
     </body>

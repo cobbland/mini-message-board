@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const path = require("node:path");
-const messages = require("../db.js");
+const { messages, newDate } = require("../db.js");
 
 router.get("/", (req, res) => {
     res.render("index", { title: "Mini Message Board", messages: messages });
@@ -15,7 +15,7 @@ router.post("/new", (req, res) => {
     messages.push({ 
         text: req.body.message,
         user: req.body.name,
-        added: new Date(),
+        added: newDate(),
         id: req.body.id,
     });
     res.redirect("/");
